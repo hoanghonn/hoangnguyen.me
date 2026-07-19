@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Privacy Policy — Hoang Nguyen">
+  <div class="page">
+    <Nav activePage="home" borderBottom />
+    <h1 class="legal-title">Privacy Policy</h1>
+
+    <section class="section">
+      <div class="section-label">What This Site Collects</div>
+      <div class="section-body">
+        <p>hoangnguyen.me is a personal portfolio and blog. The site itself does not
+        ask you for personal information and does not run advertising or tracking
+        cookies. Basic, anonymous request logs (such as page views) may be produced
+        by the hosting provider for reliability and security.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Comments</div>
+      <div class="section-body">
+        <p>Blog comments are powered by Giscus, which stores comments as GitHub
+        Discussions. If you choose to comment, you do so with your GitHub account
+        under GitHub's own privacy policy. You can edit or delete your comments at
+        any time from the corresponding GitHub Discussion.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Contact</div>
+      <div class="section-body">
+        <p>Questions about privacy? Reach out via the contact details on the
+        <a href="/">home page</a>.</p>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .legal-title { text-align: center; font-size: clamp(28px, 4vw, 44px); font-weight: 700; margin: 48px 0 8px; }
+  .section-body p { color: var(--fg-dim); margin: 0 0 16px; }
+  .section-body a:hover { color: var(--accent); }
+</style>

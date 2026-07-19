@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Accessibility Statement — Hoang Nguyen">
+  <div class="page">
+    <Nav activePage="home" borderBottom />
+    <h1 class="legal-title">Accessibility Statement</h1>
+
+    <section class="section">
+      <div class="section-label">Our Commitment</div>
+      <div class="section-body">
+        <p>I want hoangnguyen.me to be usable by as many people as possible,
+        including visitors who rely on assistive technologies such as screen
+        readers or keyboard navigation.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">What We've Done</div>
+      <div class="section-body">
+        <p>The site aims to follow WCAG 2.1 AA guidance: semantic HTML and heading
+        structure, alt text on images, colour combinations chosen for contrast,
+        reduced motion honoured via <code>prefers-reduced-motion</code>, and full
+        keyboard operability.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Feedback</div>
+      <div class="section-body">
+        <p>If you encounter an accessibility barrier on this site, please let me
+        know through the contact details on the <a href="/">home page</a> and I'll
+        do my best to fix it.</p>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .legal-title { text-align: center; font-size: clamp(28px, 4vw, 44px); font-weight: 700; margin: 48px 0 8px; }
+  .section-body p { color: var(--fg-dim); margin: 0 0 16px; }
+  .section-body code { background: #1a1a1a; padding: 2px 6px; color: var(--accent); font-size: 12px; }
+  .section-body a:hover { color: var(--accent); }
+</style>
