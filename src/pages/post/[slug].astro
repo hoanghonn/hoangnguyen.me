@@ -6,7 +6,7 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map(post => ({ params: { id: post.id }, props: { post } }));
+  return posts.map(post => ({ params: { slug: post.data.slug }, props: { post } }));
 }
 
 const { post } = Astro.props;
@@ -30,10 +30,14 @@ const { Content } = await render(post);
         </div>
       </header>
 
-      <div
-        class:list={['post-cover', post.data.cover]}
-        style={post.data.coverGradient ? `background: ${post.data.coverGradient}` : undefined}
-      ></div>
+      {post.data.coverImage ? (
+        <img class="post-cover-img" src={post.data.coverImage} alt={post.data.title} />
+      ) : (
+        <div
+          class:list={['post-cover', post.data.cover]}
+          style={post.data.coverGradient ? `background: ${post.data.coverGradient}` : undefined}
+        ></div>
+      )}
 
       <div class="post-body">
         <Content />
@@ -82,6 +86,8 @@ const { Content } = await render(post);
   .post-cover.illustration {
     background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.06) 0, transparent 55%), linear-gradient(180deg, #3a3a3a 0%, #2e2e2e 100%);
   }
+  .post-cover-img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; margin-bottom: 48px; display: block; }
+  @media (max-width: 640px) { .post-cover-img { aspect-ratio: 16 / 9; margin-bottom: 24px; } }
 
   .post-body { color: var(--fg-dim); line-height: 1.8; font-size: 14px; }
   .post-body :global(h2) { font-size: 18px; font-weight: 700; color: var(--fg); margin: 40px 0 14px; letter-spacing: 0.02em; }
