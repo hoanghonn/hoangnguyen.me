@@ -1,16 +1,29 @@
-# hoangnguyen.me — Design Parity, Missing Pages & Blog CMS
+# hoangnguyen.me — Design Parity & Missing Pages
 
 **Date:** 2026-07-19
-**Status:** Approved (pending spec review)
+**Status:** Approved (reconciled with parallel effort)
+**Branch:** `design-parity` (isolated worktree; hand off for merge — do NOT push to `main`)
 
 ## Goal
 
 Bring the existing Astro rebuild of `hoangnguyen.me` to visual + structural parity
-with the live Wix site, fill in the two missing pages, align URLs, and add a
-Markdown-based CMS (Keystatic) so the owner can write and publish blog posts
-without touching code.
+with the live Wix site, fill in the two missing pages, align blog URLs to the live
+`/post/<slug>` structure, and add Giscus comments. Keep the blog CMS as the
+**Decap** setup already scaffolded by a parallel effort.
 
-Out of scope for this session: deploying/hosting the site.
+## Concurrency context (IMPORTANT)
+
+A **separate, active session/agent** is building this same repo in a different
+direction and is committing + pushing to `origin/main` during this work
+(observed `main` advance `366aeac → d9d499f` mid-session). To avoid collisions:
+
+- All work happens in an **isolated git worktree** on branch `design-parity`
+  (dir: `…/hoang-nguyen-me.wt/design-parity`), separate from the shared checkout.
+- **Do not push** to `origin/main`. Deliver a branch; the owner merges when the
+  parallel effort settles, resolving any merge conflicts then.
+- **Do not touch** files owned by the parallel effort except where schema
+  consistency requires it (see CMS below): deployment files (Dockerfile, nginx,
+  Cloud Build/GCP, the deployment plan) are entirely out of scope.
 
 ## Current State (verified via side-by-side screenshots)
 
@@ -19,10 +32,8 @@ The rebuild already matches the live site closely: dark `#222` theme, neon
 About/Skills/Work/Education/Projects sections, marquee wordmark, blog index with
 category filters + search, and syntax-highlighted post bodies. Stack is Astro 6
 with `@astrojs/mdx` and a `remark-image-caption` plugin. Content collections
-(`blog`, `projects`) are defined in `src/content.config.ts`.
-
-The floating pill seen in dev screenshots is the Astro dev toolbar (dev-only) —
-not a design defect.
+(`blog`, `projects`) are defined in `src/content.config.ts`. The floating pill in
+dev screenshots is the Astro dev toolbar (dev-only) — not a defect.
 
 ## Live site inventory (from sitemap)
 
@@ -39,113 +50,114 @@ not a design defect.
 
 ## Decisions (approved)
 
-1. **Cover images** — download the real images from the live Wix pages into
-   `public/`, wire to each post.
+1. **Cover images** — download the real images from the live Wix pages, wire to
+   each post. (Parallel effort already fetched `70km-finisher.avif`; reuse
+   existing files, only download the missing ones — no duplicate downloads.)
 2. **Engagement** — add **Giscus** comments (GitHub Discussions backed); remove
    the fake view/like/comment counters and the non-functional share-icon row.
 3. **Legal pages** — clean, minimal, real privacy + accessibility text (no Wix
    `[placeholder]` boilerplate), reusing the home two-column section layout.
 4. **Post header** — match live: centered title + meta, category rendered as
    tag(s) at the bottom of the article.
+5. **CMS** — keep **Decap** (already scaffolded at `public/admin/`). Do NOT add
+   Keystatic. My only CMS change: keep `public/admin/config.yml` in sync with any
+   blog-schema fields I add, and document the local edit→commit→rebuild flow.
 
 ## Work Items
 
 ### A. Design fidelity fixes
 
-- **A1 Wordmark** (`components/Wordmark.astro`): change repeated word from
-  `hoangnguyen` to `hoangnguyen.me`.
+- **A1 Wordmark** (`components/Wordmark.astro`): repeated word `hoangnguyen` →
+  `hoangnguyen.me`.
 - **A2 About** (`components/About.astro`): remove the duplicated contact block
-  from the left aside so contact appears only in `ContactStrip`. Left column
+  from the left aside so contact appears only in `ContactStrip`; left column
   keeps just the `ABOUT` label (matches live).
 - **A3 Footer** (`components/Footer.astro`): links → `/privacy-policy` and
-  `/accessibility-statement`; copyright year sourced once (keep a single
-  hardcoded `2024` to match live, or a build-time year — implementer picks the
-  simpler; default to `2024` for exact parity).
-- **A4 Glyph**: already `<>` in About — no change. Verify no `</>` remains.
+  `/accessibility-statement`; copyright year hardcoded `2024` (matches live).
+- **A4 Glyph**: already `<>` in About — verify no `</>` remains elsewhere.
 
 ### B. Cover images
 
 - **B1**: Extract image URLs from the live `/post/<slug>` and `/blog` pages
-  (Wix serves via `static.wixstatic.com`). Download originals into
-  `public/blog/<slug>.<ext>`.
-- **B2**: Extend `blog` collection schema with an optional `coverImage` string
-  (path under `public/`). Keep the existing `cover` enum as a styled fallback.
-- **B3**: Blog index card (`pages/blog/index.astro`) and post cover
-  (`pages/post/[slug].astro`) render `coverImage` when present, else the
-  existing styled placeholder.
-- **B4**: Map each of the 5 posts to its downloaded image.
+  (Wix `static.wixstatic.com`). Download only images not already present into a
+  single conventional location under `public/` (reuse the parallel effort's
+  `public/images/blog/` to avoid a competing directory).
+- **B2**: Extend the `blog` schema with an optional `coverImage` string (path
+  under `public/`). Keep the existing `cover` enum as styled fallback.
+- **B3**: Blog index card and post cover render `coverImage` when present, else
+  the existing styled placeholder.
+- **B4**: Map each of the 5 posts to its image.
 
 ### C. URL structure
 
 - **C1**: Add a `slug` field to each blog entry's frontmatter matching the live
-  slugs listed above. (Frontmatter slug avoids renaming files and keeps the CMS
-  simple.)
-- **C2**: Rename route `pages/blog/[id].astro` → `pages/post/[slug].astro`;
+  slugs above (frontmatter slug; avoids renaming files, keeps Decap simple).
+- **C2**: New route `pages/post/[slug].astro` (replaces `pages/blog/[id].astro`);
   `getStaticPaths` uses `data.slug`. Keep `/blog` as the index.
-- **C3**: Update all internal links (`/blog/<id>` → `/post/<slug>`) in the index
-  cards and any "back to blog"/recent-post links.
+- **C3**: Update internal links (`/blog/<id>` → `/post/<slug>`) in index cards,
+  back-to-blog, and recent-post links.
 
 ### D. Post page (`pages/post/[slug].astro`)
 
-- **D1**: Center the header — title + meta centered; move the category out of
-  the top chip to a tag row at the **bottom** of the article (above comments).
+- **D1**: Center the header — title + meta centered; move category from top chip
+  to a tag row at the **bottom** of the article (above comments).
 - **D2**: Render `coverImage` inline (replacing the empty placeholder box).
-- **D3**: Add a **Recent Posts** block below the article — up to 3 other posts
-  as compact cards (reuse card styling), excluding the current post.
-- **D4**: Add a **Giscus** comments component below Recent Posts.
+- **D3**: Add a **Recent Posts** block below the article (≤3 other posts, reuse
+  card styling, exclude current).
+- **D4**: Add the Giscus comments component below Recent Posts.
 
 ### E. Giscus comments (`components/Comments.astro`)
 
-- Client-side Giscus embed script, themed to match (`--bg`/`--accent`), mapped
-  by `pathname`, lazy-loaded.
-- Config values (`data-repo`, `data-repo-id`, `data-category`,
-  `data-category-id`) kept in one place with clearly-marked placeholders.
-- **Documented prerequisite** (README note): create a public GitHub repo, enable
-  Discussions, install the giscus GitHub app, fill in the 4 config values.
-  Component renders harmlessly (empty) until configured.
+- Client-side Giscus embed, themed to match (`--bg`/`--accent`), mapped by
+  `pathname`, lazy-loaded.
+- Config (`data-repo`, `data-repo-id`, `data-category`, `data-category-id`) in
+  one place with clearly-marked placeholders; renders harmlessly (empty) until
+  configured.
+- **Documented prerequisite** (README): repo is `hoanghonn/hoangnguyen.me` —
+  make it public, enable Discussions, install the giscus GitHub app, fill the 4
+  config values.
 
 ### F. Missing pages
 
 - **F1** `pages/privacy-policy.astro`: home two-column section layout
-  (`.section` / `.section-label` / `.section-body`), centered page title,
-  Nav + Footer. Clean minimal real privacy text.
+  (`.section` / `.section-label` / `.section-body`), centered page title, Nav +
+  Footer. Clean minimal real privacy text.
 - **F2** `pages/accessibility-statement.astro`: same layout, clean minimal real
-  accessibility statement (site owner, WCAG intent, contact for issues — no
+  accessibility statement (owner, WCAG intent, contact for issues — no
   `[placeholder]` text).
 
-### G. Keystatic CMS
+### G. Decap config sync (light-touch — parallel effort owns Decap)
 
-- **G1**: Install `@keystatic/core` and `@keystatic/astro`; add the Astro
-  integration + React (`@astrojs/react`) which Keystatic requires; set
-  `output` appropriately for the admin route.
-- **G2**: `keystatic.config.ts` — `local` storage; collections for `blog`
-  (fields: title, category select, date, readTime, slug, cover select,
-  coverImage image, plus Markdown/MDX body) and `projects` (title, desc, url,
-  order). Paths point at existing `src/content/{blog,projects}`.
-- **G3**: Admin UI reachable at `/keystatic` in dev (`npm run dev`).
-- **G4**: Update `package.json` (remove stale `cms`/decap script) and README
-  with the write→publish flow: edit in `/keystatic` → saves Markdown to repo →
-  rebuild/redeploy. Note the path to flip `local` → `github` storage later.
+- **G1**: In `public/admin/config.yml`, add the new blog fields I introduce
+  (`slug`; `coverImage` as an image widget pointing at `public/images/blog`) so
+  the CMS can edit them. Do not otherwise restructure Decap.
+- **G2**: README: document the local authoring flow — `npm run cms`
+  (`npx decap-server`) + `npm run dev`, open `/admin`, edit, save → writes
+  Markdown to `src/content/blog/`, commit + push → rebuild. Note Decap's
+  git-gateway backend is local-only in this setup (no Netlify Identity in prod).
 
 ## Non-goals / known divergences
 
-- View/like/comment **counts** from Wix are not reproduced (no backend).
-- Giscus is inert until a public GitHub repo + app are configured.
-- Legal page copy intentionally differs from the Wix boilerplate (cleaner).
+- Deployment (Docker/GCP/nginx/Cloud Build) — owned by the parallel effort.
+- Keystatic — explicitly not used.
+- Wix view/like/comment **counts** — not reproduced (no backend).
+- Giscus — inert until the GitHub repo is public + Discussions + app configured.
+- Legal page copy intentionally differs from Wix boilerplate (cleaner).
 
 ## Testing / verification
 
-- `npm run build` succeeds with zero errors; all 5 posts build at
-  `/post/<slug>` matching live slugs; `/privacy-policy`,
-  `/accessibility-statement`, `/blog`, `/` all present in `dist/`.
+- `npm run build` succeeds with zero errors; all 5 posts build at `/post/<slug>`
+  matching live slugs; `/privacy-policy`, `/accessibility-statement`, `/blog`,
+  `/` present in `dist/`.
 - Playwright re-screenshot of `/`, `/blog`, one `/post/<slug>`, and both legal
   pages; visually diff against the captured live screenshots in the scratchpad.
-- `/keystatic` loads in dev and lists blog + project entries; creating a test
-  post writes a Markdown file into `src/content/blog/` and it renders.
 - No broken internal links (old `/blog/<id>` links removed).
+- `public/admin/config.yml` still parses and lists the new fields.
 
-## Notes
+## Notes / handoff
 
-- Repo is **not** under git yet. The design doc cannot be committed until
-  `git init`. Recommend initializing git (also a prerequisite for Giscus/GitHub
-  storage and any future hosting) — to be confirmed with the owner.
+- Repo is under git with remote `github.com/hoanghonn/hoangnguyen.me`.
+- Work lands on branch `design-parity`. Owner reviews, then merges into `main`
+  after coordinating with the parallel (Decap + deployment) effort. Any merge
+  conflicts (likely in `src/content.config.ts`, blog frontmatter, or
+  `public/admin/config.yml`) get resolved at merge time.
