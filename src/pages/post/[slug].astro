@@ -54,12 +54,12 @@ const recent = all.filter(p => p.data.slug !== post.data.slug).slice(0, 3);
     </article>
 
     <section class="recent">
-      <div class="recent-head"><span>Recent Posts</span><a href="/blog">See All</a></div>
+      <div class="recent-head"><h2>Recent Posts</h2><a href="/blog">See All</a></div>
       <div class="recent-grid">
         {recent.map(p => (
           <a class="recent-card" href={`/post/${p.data.slug}`}>
             <div class="recent-cover" style={p.data.coverImage ? `background-image:url(${p.data.coverImage})` : undefined}></div>
-            <h4>{p.data.title}</h4>
+            <h3>{p.data.title}</h3>
             <div class="recent-meta">{p.data.date} · {p.data.readTime}</div>
           </a>
         ))}
@@ -144,9 +144,10 @@ const recent = all.filter(p => p.data.slug !== post.data.slug).slice(0, 3);
 
   .recent { max-width: 760px; margin: 64px auto 0; }
   .recent-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--fg-dim); margin-bottom: 20px; }
+  .recent-head h2 { font-size: 12px; margin: 0; }
   .recent-head a:hover { color: var(--accent); }
   .recent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .recent-card h4 { font-size: 13px; margin: 10px 0 4px; line-height: 1.35; }
+  .recent-card h3 { font-size: 13px; margin: 10px 0 4px; line-height: 1.35; }
   .recent-cover { aspect-ratio: 16 / 9; background: var(--card-img); background-size: cover; background-position: center; }
   .recent-meta { font-size: 11px; color: var(--fg-subtle); }
   @media (max-width: 640px) { .recent-grid { grid-template-columns: 1fr; } }

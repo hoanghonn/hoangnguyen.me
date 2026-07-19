@@ -1,6 +1,6 @@
 ---
 interface Props {
-  activePage: 'home' | 'blog';
+  activePage?: 'home' | 'blog';
   borderBottom?: boolean;
 }
 const { activePage, borderBottom = false } = Astro.props;
