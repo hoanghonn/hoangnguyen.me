@@ -1,60 +1,79 @@
-# Astro Starter Kit: Minimal
+# hoangnguyen.me
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal portfolio and blog for Hoang Nguyen - Engineering Lead at Employment Hero and founder of Code Beavers. Built with [Astro](https://astro.build/) as a fully static site with a dark, monospace aesthetic.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Tech stack
 
-## 🚀 Project Structure
+- **Astro 6** (static output) with `@astrojs/mdx`
+- **JetBrains Mono** type, neon-on-charcoal theme
+- **Decap CMS** for authoring blog posts (local, git-based)
+- **Giscus** for comments (GitHub Discussions)
+- Content in Markdown via Astro content collections
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/        # Homepage sections (Hero, About, Skills, WorkExperience, Projects, …)
+├── content/
+│   ├── blog/          # Blog posts (.md) — one file per post
+│   └── projects/      # Project cards (.md)
+├── content.config.ts  # Collection schemas (blog, projects)
+├── layouts/Base.astro # HTML shell + global styles
+├── pages/
+│   ├── index.astro                    # Home
+│   ├── blog/index.astro               # Blog index
+│   ├── post/[slug].astro              # Blog post (routes at /post/<slug>)
+│   ├── privacy-policy.astro
+│   └── accessibility-statement.astro
+public/
+├── admin/             # Decap CMS (config.yml + index.html)
+└── images/blog/       # Blog cover images & galleries
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Commands
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Install dependencies                         |
+| `npm run dev`     | Dev server at `localhost:4321`               |
+| `npm run cms`     | Local Decap CMS backend (port 8081)          |
+| `npm run build`   | Build static site to `./dist/`               |
+| `npm run preview` | Preview the production build locally         |
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Editing content
 
-## 🧞 Commands
+### Blog posts (Decap CMS - no code)
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Editing blog posts (Decap CMS)
-
-1. `npm run cms` (starts the local Decap backend on port 8081) and, in another terminal, `npm run dev`.
-2. Open **http://localhost:4321/admin/index.html** — click **Login** (local mode needs no account) to add/edit posts. Saving writes Markdown to `src/content/blog/`.
-   - Note: in the Astro **dev** server you must use the full `/admin/index.html` path — plain `/admin` returns 404 because the dev server doesn't auto-serve the folder's index. On the built/deployed site (nginx or `npm run preview`), `/admin/` works directly.
+1. `npm run cms` (Decap backend on port 8081) and, in another terminal, `npm run dev`.
+2. Open **http://localhost:4321/admin/index.html** - click **Login** (local mode needs no account) to add/edit posts. Saving writes Markdown to `src/content/blog/`.
+   - In the Astro **dev** server, use the full `/admin/index.html` path - plain `/admin` returns 404 because the dev server doesn't auto-serve the folder index. On the built/deployed site (nginx or `npm run preview`), `/admin/` works directly.
 3. Commit and push the generated Markdown; the site rebuilds from it.
 
-Fields: title, category, date, read time, **slug** (the `/post/<slug>` URL), cover style, optional cover gradient, optional cover image, and body.
+Blog fields: title, category, date, read time, **slug** (the `/post/<slug>` URL), cover style, optional cover gradient, optional cover image, optional photo gallery, and body.
 
-## Comments (Giscus)
+> Posts that embed the `<ImageGrid>` gallery keep the images in a `gallery:` frontmatter list, so they stay plain Markdown and remain editable in Decap. The gallery renders at the end of the post.
+
+### Homepage sections (code)
+
+The homepage is composed of components in `src/components/`, edited directly:
+
+- **About / role / bio** → `About.astro`
+- **Work experience** → `WorkExperience.astro` (each role: date, title, company, optional `url`, bullets)
+- **Skills** → `Skills.astro`
+- **Rotating hero title** → `Hero.astro` (the `ROLES` array)
+- **Projects** → cards live in `src/content/projects/*.md` (title, desc, optional `url`, `order`, optional `award: { label, url }`)
+
+### Comments (Giscus)
 
 Comments use Giscus (GitHub Discussions). To enable:
+
 1. Make the repo public and enable Discussions.
 2. Install the giscus app: https://github.com/apps/giscus
 3. At https://giscus.app, generate `repo-id` and `category-id` and paste them into `src/components/Comments.astro`.
+
 Until configured, the comments section renders nothing.
+
+## Deployment
+
+The site builds to static files in `dist/`. Deployment (Docker + nginx + Cloud Run) is documented separately in [`docs/deployment.md`](docs/deployment.md).

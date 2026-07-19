@@ -6,10 +6,10 @@ interface Props {
 const { activePage, borderBottom = false } = Astro.props;
 ---
 <nav class:list={['nav', { 'border-bottom': borderBottom }]}>
-  <div class="nav-brand">
+  <a class="nav-brand" href="/">
     <span>HOANG NGUYEN</span>
     <span>PLAYGROUND</span>
-  </div>
+  </a>
   <div class="nav-links">
     <a href="/blog" class:list={[{ active: activePage === 'blog' }]}>Blog</a>
     <a href="/" class:list={[{ active: activePage === 'home' }]}>Home</a>

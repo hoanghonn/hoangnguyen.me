@@ -81,7 +81,8 @@ const { title } = Astro.props;
     padding-right: clamp(20px, 3vw, 80px);
   }
   .nav.border-bottom { border-bottom: 1px solid #ffffff22; }
-  .nav-brand { font-weight: 700; line-height: 1.25; }
+  .nav-brand { font-weight: 700; line-height: 1.25; transition: color .15s ease; }
+  .nav-brand:hover { color: var(--accent); }
   .nav-brand span { display: block; }
   .nav-links { display: flex; gap: 36px; font-size: 14px; letter-spacing: 0; text-transform: none; font-weight: 400; }
   .nav-links a { color: var(--fg); position: relative; transition: color .15s ease; }

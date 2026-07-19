@@ -7,12 +7,22 @@ const projects = all.sort((a, b) => a.data.order - b.data.order);
   <div class="projects-label">PROJECTS</div>
   <div class="projects-grid">
     {projects.map((p, i) => (
-      <a class="project-card" href={p.data.url ?? `#project-${i}`}>
+      <div class="project-card">
+        <a
+          class="project-link"
+          href={p.data.url ?? `#project-${i}`}
+          aria-label={p.data.title}
+          target={p.data.url ? '_blank' : undefined}
+          rel={p.data.url ? 'noopener' : undefined}
+        ></a>
         <div class="project-icon">&lt;/&gt;</div>
         <div class="project-title">{p.data.title}</div>
         <div class="project-desc">{p.data.desc}</div>
+        {p.data.award && (
+          <a class="project-award" href={p.data.award.url} target="_blank" rel="noopener">★ {p.data.award.label}</a>
+        )}
         <div class="project-more">MORE INFO</div>
-      </a>
+      </div>
     ))}
   </div>
 </section>
@@ -48,6 +58,23 @@ const projects = all.sort((a, b) => a.data.order - b.data.order);
   .project-desc { font-size: 12px; line-height: 1.55; margin-bottom: 22px; flex: 1; }
   .project-more { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; }
   .project-card:hover .project-more { text-decoration: underline; }
+  .project-link { position: absolute; inset: 0; z-index: 1; }
+  .project-award {
+    position: relative;
+    z-index: 2;
+    align-self: flex-start;
+    display: inline-block;
+    background: #06241a;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 4px 8px;
+    margin-bottom: 14px;
+    text-decoration: none;
+    transition: opacity .15s ease;
+  }
+  .project-award:hover { opacity: 0.82; }
   @keyframes cardIn {
     from { opacity: 0; translate: 0 20px; }
     to   { opacity: 1; translate: 0 0; }
