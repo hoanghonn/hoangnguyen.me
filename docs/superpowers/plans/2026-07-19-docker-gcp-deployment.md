@@ -24,7 +24,7 @@ export PROJECT_ID="your-gcp-project-id"      # e.g. hoang-nguyen-me
 export REGION="asia-east1"                    # Taiwan: Tier 1 pricing + low latency to Vietnam/SEA
 export REPO="web"                             # Artifact Registry repo name
 export SERVICE="hoang-nguyen-me"              # Cloud Run service name
-export DOMAIN="hoang-nguyen.me"               # custom domain
+export DOMAIN="hoangnguyen.me"                # custom domain
 export GH_REPO="hoanghonn/hoangnguyen.me"     # GitHub owner/repo (existing, empty, public)
 ```
 

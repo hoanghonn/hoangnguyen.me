@@ -44,7 +44,7 @@ GitHub (main)  ──push──▶  Cloud Build trigger
                               │
                          Domain mapping + managed TLS
                               ▼
-                    hoang-nguyen.me  (DNS at registrar)
+                    hoangnguyen.me  (DNS at registrar)
 ```
 
 ### Container strategy - multi-stage build
@@ -102,7 +102,7 @@ redeploying an older tag.
 ### Custom domain
 
 After the first successful deploy, create a Cloud Run **domain mapping** for
-`hoang-nguyen.me` (optionally `www`), then add the DNS records it outputs at the
+`hoangnguyen.me` (optionally `www`), then add the DNS records it outputs at the
 registrar. Google auto-provisions and renews TLS.
 
 ## Files this plan adds
