@@ -23,10 +23,12 @@ collections:
         options: [Technology, Trail Running]
       - { label: Date, name: date, widget: date, format: YYYY-MM-DD }
       - { label: Read Time, name: readTime, widget: string, default: "5 min read" }
+      - { label: Slug, name: slug, widget: string, hint: "URL path under /post/, e.g. my-first-50km-trail-marathon" }
       - label: Cover Style
         name: cover
         widget: select
         options: [empty, illustration, gradient, photo]
         default: empty
       - { label: Cover Gradient (optional), name: coverGradient, widget: string, required: false }
+      - { label: Cover Image, name: coverImage, widget: image, required: false, choose_url: false }
       - { label: Body, name: body, widget: markdown }

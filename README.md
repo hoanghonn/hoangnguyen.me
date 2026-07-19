@@ -41,3 +41,19 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## Editing blog posts (Decap CMS)
+
+1. `npm run cms` (starts the local Decap backend) and, in another terminal, `npm run dev`.
+2. Open http://localhost:4321/admin — add/edit posts (writes Markdown to `src/content/blog/`).
+3. Commit and push the generated Markdown; the site rebuilds from it.
+
+Fields: title, category, date, read time, **slug** (the `/post/<slug>` URL), cover style, optional cover gradient, optional cover image, and body.
+
+## Comments (Giscus)
+
+Comments use Giscus (GitHub Discussions). To enable:
+1. Make the repo public and enable Discussions.
+2. Install the giscus app: https://github.com/apps/giscus
+3. At https://giscus.app, generate `repo-id` and `category-id` and paste them into `src/components/Comments.astro`.
+Until configured, the comments section renders nothing.
