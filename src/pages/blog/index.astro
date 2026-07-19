@@ -33,14 +33,16 @@ const posts = (await getCollection('blog')).sort(
       {posts.map((post, i) => (
         <a
           class="card reveal"
-          href={`/blog/${post.id}`}
+          href={`/post/${post.data.slug}`}
           data-category={post.data.category}
           data-title={post.data.title.toLowerCase()}
           style={`animation-delay: ${i * 60}ms`}
         >
           <div
             class:list={['card-cover', post.data.cover]}
-            style={post.data.coverGradient ? `background: ${post.data.coverGradient}` : undefined}
+            style={post.data.coverImage
+              ? `background-image:url(${post.data.coverImage})`
+              : (post.data.coverGradient ? `background: ${post.data.coverGradient}` : undefined)}
           ></div>
           <div class="card-meta">
             <div class="card-author">
@@ -56,16 +58,6 @@ const posts = (await getCollection('blog')).sort(
             <span class="tag">{post.data.category}</span>
             <h3 class="card-title">{post.data.title}</h3>
             <div class="card-divider"></div>
-            <div class="card-actions">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h2.6l.4-3H13V9c0-.9.3-1.5 1.5-1.5H16V4.8c-.3 0-1.2-.1-2.2-.1-2.2 0-3.8 1.3-3.8 3.8V11H7v3h3v8h3z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3l-6.6 7.5L22 21h-6.1l-4.8-6.3L5.6 21H2.5l7-8L2 3h6.2l4.4 5.8L17.5 3zm-1 16h1.7L7.6 5H5.8l10.7 14z"/></svg>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 14a4 4 0 0 0 5.66 0l3.18-3.18a4 4 0 0 0-5.66-5.66l-1.06 1.06" />
-                <path d="M14 10a4 4 0 0 0-5.66 0l-3.18 3.18a4 4 0 0 0 5.66 5.66l1.06-1.06" />
-              </svg>
-              <div class="spacer"></div>
-              <svg class="menu" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg>
-            </div>
           </div>
         </a>
       ))}
@@ -240,11 +232,6 @@ const posts = (await getCollection('blog')).sort(
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
-.card-actions { display: flex; align-items: center; gap: 18px; color: var(--fg-dim); }
-  .card-actions svg { width: 16px; height: 16px; }
-  .card-actions svg:hover { color: var(--fg); }
-  .spacer { flex: 1; }
-
   .empty-state {
     grid-column: 1 / -1;
     padding: 80px 0;

@@ -8,8 +8,10 @@ const blog = defineCollection({
     category: z.enum(['Technology', 'Trail Running']),
     date: z.string(),
     readTime: z.string(),
+    slug: z.string(),
     cover: z.enum(['illustration', 'photo', 'empty', 'gradient']).default('empty'),
     coverGradient: z.string().optional(),
+    coverImage: z.string().optional(),
   }),
 });
 

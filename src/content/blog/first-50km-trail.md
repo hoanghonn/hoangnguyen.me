@@ -3,8 +3,10 @@ title: "My first 50KM trail marathon"
 category: Trail Running
 date: "Dec 10, 2024"
 readTime: "4 min read"
+slug: my-first-50km-trail-marathon
 cover: photo
 coverGradient: "linear-gradient(180deg, #6a8252 0%, #2f3f28 100%)"
+coverImage: /images/blog/my-first-50km-trail-marathon.jpg
 ---
 
 I came to trail running late — I was 26 when I ran my first 5km on dirt, and I didn't register for my first trail race until this year. The 50KM distance felt both audacious and achievable, which is probably the right level of ambition for a first attempt.
