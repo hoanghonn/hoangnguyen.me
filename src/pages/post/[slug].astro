@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import Comments from '../../components/Comments.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -64,6 +65,8 @@ const recent = all.filter(p => p.data.slug !== post.data.slug).slice(0, 3);
         ))}
       </div>
     </section>
+
+    <Comments />
 
     <div class="back-row">
       <a href="/blog" class="btn btn-ghost">← BACK TO BLOG</a>

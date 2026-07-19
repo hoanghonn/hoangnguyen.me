@@ -1,0 +1,37 @@
+---
+// Fill these after enabling GitHub Discussions + installing the giscus app
+// at https://giscus.app for repo hoanghonn/hoangnguyen.me:
+const REPO = 'hoanghonn/hoangnguyen.me';
+const REPO_ID = 'REPLACE_WITH_REPO_ID';
+const CATEGORY = 'Announcements';
+const CATEGORY_ID = 'REPLACE_WITH_CATEGORY_ID';
+const configured = !REPO_ID.startsWith('REPLACE_') && !CATEGORY_ID.startsWith('REPLACE_');
+---
+{configured && (
+  <section class="comments" data-giscus
+    data-repo={REPO} data-repo-id={REPO_ID}
+    data-category={CATEGORY} data-category-id={CATEGORY_ID}>
+  </section>
+)}
+
+<style>
+  .comments { max-width: 760px; margin: 56px auto 0; }
+</style>
+
+<script>
+  const el = document.querySelector('[data-giscus]') as HTMLElement | null;
+  if (el) {
+    const s = document.createElement('script');
+    s.src = 'https://giscus.app/client.js';
+    s.async = true; s.crossOrigin = 'anonymous';
+    s.setAttribute('data-repo', el.dataset.repo!);
+    s.setAttribute('data-repo-id', el.dataset.repoId!);
+    s.setAttribute('data-category', el.dataset.category!);
+    s.setAttribute('data-category-id', el.dataset.categoryId!);
+    s.setAttribute('data-mapping', 'pathname');
+    s.setAttribute('data-theme', 'dark_dimmed');
+    s.setAttribute('data-reactions-enabled', '1');
+    s.setAttribute('data-loading', 'lazy');
+    el.appendChild(s);
+  }
+</script>
