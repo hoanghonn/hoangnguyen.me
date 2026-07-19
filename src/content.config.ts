@@ -12,6 +12,7 @@ const blog = defineCollection({
     cover: z.enum(['illustration', 'photo', 'empty', 'gradient']).default('empty'),
     coverGradient: z.string().optional(),
     coverImage: z.string().optional(),
+    gallery: z.array(z.object({ src: z.string(), alt: z.string().optional() })).optional(),
   }),
 });
 

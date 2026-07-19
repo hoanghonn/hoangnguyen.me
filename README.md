@@ -44,8 +44,9 @@ Feel free to check [our documentation](https://docs.astro.build) or jump into ou
 
 ## Editing blog posts (Decap CMS)
 
-1. `npm run cms` (starts the local Decap backend) and, in another terminal, `npm run dev`.
-2. Open http://localhost:4321/admin — add/edit posts (writes Markdown to `src/content/blog/`).
+1. `npm run cms` (starts the local Decap backend on port 8081) and, in another terminal, `npm run dev`.
+2. Open **http://localhost:4321/admin/index.html** — click **Login** (local mode needs no account) to add/edit posts. Saving writes Markdown to `src/content/blog/`.
+   - Note: in the Astro **dev** server you must use the full `/admin/index.html` path — plain `/admin` returns 404 because the dev server doesn't auto-serve the folder's index. On the built/deployed site (nginx or `npm run preview`), `/admin/` works directly.
 3. Commit and push the generated Markdown; the site rebuilds from it.
 
 Fields: title, category, date, read time, **slug** (the `/post/<slug>` URL), cover style, optional cover gradient, optional cover image, and body.

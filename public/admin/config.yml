@@ -31,4 +31,13 @@ collections:
         default: empty
       - { label: Cover Gradient (optional), name: coverGradient, widget: string, required: false }
       - { label: Cover Image, name: coverImage, widget: image, required: false, choose_url: false }
+      - label: Gallery (photos)
+        name: gallery
+        widget: list
+        required: false
+        label_singular: Photo
+        summary: "{{fields.alt}}"
+        fields:
+          - { label: Image, name: src, widget: image, choose_url: false }
+          - { label: Alt text, name: alt, widget: string, required: false }
       - { label: Body, name: body, widget: markdown }
