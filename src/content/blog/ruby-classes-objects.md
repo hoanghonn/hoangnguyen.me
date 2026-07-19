@@ -3,7 +3,9 @@ title: "The Chicken-and-Egg Problem of Classes and Objects in Ruby (with a Twist
 category: Technology
 date: "Mar 16, 2025"
 readTime: "3 min read"
-cover: illustration
+slug: the-chicken-and-egg-problem-of-classes-and-objects-in-ruby-with-a-python-twist
+cover: photo
+coverImage: /images/blog/the-chicken-and-egg-problem-of-classes-and-objects-in-ruby-with-a-python-twist.webp
 ---
 
 Ruby's object model has a famous philosophical puzzle at its core: every class is an object, but every object is an instance of a class. So which came first — the class or the object?

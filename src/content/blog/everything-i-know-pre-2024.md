@@ -3,6 +3,7 @@ title: "Everything I know as a Software Engineer (pre-2024)"
 category: Technology
 date: "Dec 10, 2024"
 readTime: "4 min read"
+slug: everything-i-know-as-a-software-engineer-pre-2024
 cover: empty
 ---
 

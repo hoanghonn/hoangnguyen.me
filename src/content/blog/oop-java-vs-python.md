@@ -3,6 +3,7 @@ title: "Object Oriented Programming: Java vs Python"
 category: Technology
 date: "Dec 14, 2024"
 readTime: "4 min read"
+slug: object-oriented-programming-java-vs-python
 cover: empty
 ---
 
