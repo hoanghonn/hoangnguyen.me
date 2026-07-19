@@ -74,8 +74,8 @@ identically on a laptop and in Cloud Build.
 - Min instances **0** (scale to zero); max small (e.g. 2).
 - Memory 128-256Mi, CPU 1.
 - **Allow unauthenticated** invocations (public site).
-- Region chosen at implementation time (e.g. `asia-southeast1` or
-  `us-central1`).
+- Region: `asia-east1` (Taiwan) — Tier 1 pricing with low latency to
+  Vietnam/SEA.
 
 ## Cloud Build pipeline
 

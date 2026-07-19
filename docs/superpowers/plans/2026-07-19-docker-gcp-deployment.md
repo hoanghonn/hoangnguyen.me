@@ -21,7 +21,7 @@
 
 ```bash
 export PROJECT_ID="your-gcp-project-id"      # e.g. hoang-nguyen-me
-export REGION="us-central1"                   # or asia-southeast1 (pick one, keep consistent)
+export REGION="asia-east1"                    # Taiwan: Tier 1 pricing + low latency to Vietnam/SEA
 export REPO="web"                             # Artifact Registry repo name
 export SERVICE="hoang-nguyen-me"              # Cloud Run service name
 export DOMAIN="hoang-nguyen.me"               # custom domain
@@ -257,7 +257,7 @@ Expected: prints the repo resource path.
 
 ```yaml
 substitutions:
-  _REGION: us-central1
+  _REGION: asia-east1
   _REPO: web
   _SERVICE: hoang-nguyen-me
 

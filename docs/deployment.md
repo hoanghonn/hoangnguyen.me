@@ -54,7 +54,7 @@ A condensed version:
 ```bash
 # Variables (substitute real values)
 export PROJECT_ID="your-gcp-project-id"
-export REGION="us-central1"
+export REGION="asia-east1"   # Taiwan: Tier 1 pricing + low latency to Vietnam/SEA
 export REPO="web"
 export SERVICE="hoang-nguyen-me"
 export DOMAIN="hoang-nguyen.me"
