@@ -11,6 +11,11 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const all = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+const recent = all.filter(p => p.data.slug !== post.data.slug).slice(0, 3);
 ---
 <Base title={`${post.data.title} — Hoang Nguyen`}>
   <div class="page">
@@ -18,7 +23,6 @@ const { Content } = await render(post);
 
     <article class="post">
       <header class="post-header">
-        <span class="tag">{post.data.category}</span>
         <h1 class="post-title">{post.data.title}</h1>
         <div class="post-meta">
           <div class="avatar"></div>
@@ -42,7 +46,24 @@ const { Content } = await render(post);
       <div class="post-body">
         <Content />
       </div>
+
+      <div class="post-tags">
+        <span class="tag">{post.data.category}</span>
+      </div>
     </article>
+
+    <section class="recent">
+      <div class="recent-head"><span>Recent Posts</span><a href="/blog">See All</a></div>
+      <div class="recent-grid">
+        {recent.map(p => (
+          <a class="recent-card" href={`/post/${p.data.slug}`}>
+            <div class="recent-cover" style={p.data.coverImage ? `background-image:url(${p.data.coverImage})` : undefined}></div>
+            <h4>{p.data.title}</h4>
+            <div class="recent-meta">{p.data.date} · {p.data.readTime}</div>
+          </a>
+        ))}
+      </div>
+    </section>
 
     <div class="back-row">
       <a href="/blog" class="btn btn-ghost">← BACK TO BLOG</a>
@@ -54,19 +75,9 @@ const { Content } = await render(post);
 
 <style>
   .post { max-width: 760px; margin: 64px auto 0; }
-  .post-header { margin-bottom: 36px; }
-  .tag {
-    display: inline-block;
-    background: var(--accent);
-    color: #06241a;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 8px;
-    margin-bottom: 20px;
-    letter-spacing: 0.02em;
-  }
+  .post-header { text-align: center; margin-bottom: 36px; }
   .post-title { font-size: 36px; font-weight: 800; line-height: 1.15; margin: 0 0 20px; letter-spacing: 0.01em; }
-  .post-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--fg-dim); }
+  .post-meta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--fg-dim); }
   .avatar {
     width: 18px; height: 18px; border-radius: 50%;
     background: radial-gradient(circle at 30% 25%, #b9c8ff 0%, #6f7fc6 35%, #2b3a7a 70%, #0e1428 100%);
@@ -116,6 +127,26 @@ const { Content } = await render(post);
     color: var(--accent);
     font-size: 12px;
   }
+
+  .post-tags { max-width: 760px; margin: 40px auto 0; }
+  .post-tags .tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #06241a;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .recent { max-width: 760px; margin: 64px auto 0; }
+  .recent-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--fg-dim); margin-bottom: 20px; }
+  .recent-head a:hover { color: var(--accent); }
+  .recent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .recent-card h4 { font-size: 13px; margin: 10px 0 4px; line-height: 1.35; }
+  .recent-cover { aspect-ratio: 16 / 9; background: var(--card-img); background-size: cover; background-position: center; }
+  .recent-meta { font-size: 11px; color: var(--fg-subtle); }
+  @media (max-width: 640px) { .recent-grid { grid-template-columns: 1fr; } }
 
   .back-row { padding: 48px 0 32px; max-width: 760px; margin: 0 auto; }
 
