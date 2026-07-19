@@ -1,0 +1,77 @@
+---
+const roles = [
+  {
+    date: 'November 2022 — Present',
+    title: 'Senior Software Engineer',
+    company: 'Advance BizQ',
+    bullets: [
+      'Developed, implemented and maintained over 5 microservices within a large-scale system to help e-merchant acquirers actively monitor their merchants for high-risk behaviors.',
+      'Leveraged Faust streaming and Kafka\'s distributed architecture to scale sentiment analysis operations, successfully processing and analyzing 10,000+ of data points daily.',
+      'Led the migration of critical microservice components from Serverless to a Django application, overcoming challenges such as increased data load, ensuring data integrity, and minimizing downtime, resulting in enhanced scalability and system reliability.',
+      'Optimized database queries and schema design to handle high-volume data operations and low-latency data retrieval, reducing query execution time by 30%.',
+    ],
+  },
+  {
+    date: 'December 2019 – November 2022',
+    title: 'Software Engineer',
+    company: 'Foxconn',
+    bullets: [
+      'Developed advanced Celery-based Job Queues that enables smart routing & scheduling, monitoring, and executing hundreds of simultaneous ML processes.',
+      'Solely responsible for designing and developing the backend of Industrial AI Institute to support internal training on industrial digital transformation.',
+      'Implemented a synchronization mechanism to back up AI models for offline usages that supports 3+ factory production lines.',
+    ],
+  },
+  {
+    date: 'August 2019 – November 2019',
+    title: 'Software Developer',
+    company: 'Break Diving, Inc.',
+    bullets: [
+      'Created, wrote, and ran test procedures based on customer-defined system requirements for a web-based social media application.',
+      'Performed exploratory, functional, integration, cross-platform, GUI, compatibility testing; successfully detected and resolved 20+ software failures in production.',
+    ],
+  },
+];
+---
+<section class="section reveal">
+  <div class="section-label">WORK EXPERIENCE</div>
+  <div class="section-body">
+    {roles.map(r => (
+      <div class="role">
+        <div class="glyph">&lt;&gt;</div>
+        <div class="role-date">{r.date}</div>
+        <h3 class="role-title">
+          <span>{r.title}</span>
+          <span class="slash">/</span>
+          <span class="company">{r.company}</span>
+        </h3>
+        <ul class="role-bullets">
+          {r.bullets.map(b => <li>{b}</li>)}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .role { padding-bottom: 56px; }
+  .role:last-child { padding-bottom: 0; }
+  .role-date { font-size: 12px; color: var(--fg-dim); margin-bottom: 4px; }
+  .role-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+  }
+  .role-title .slash { color: var(--fg-subtle); font-weight: 400; }
+  .role-title .company { color: var(--fg-dim); font-weight: 400; margin-left: auto; font-size: 12px; letter-spacing: 0.04em; }
+  .role-bullets { color: var(--fg-dim); font-size: 12.5px; }
+  @media (max-width: 640px) {
+    .role-title { flex-wrap: wrap; gap: 8px; }
+    .role-title .company { margin-left: 0; }
+    .role-title .slash { display: none; }
+  }
+  .role-bullets li { padding-left: 18px; position: relative; margin-bottom: 8px; }
+  .role-bullets li::before { content: "•"; position: absolute; left: 0; color: var(--accent); }
+</style>

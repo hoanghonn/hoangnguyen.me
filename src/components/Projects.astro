@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+const all = await getCollection('projects');
+const projects = all.sort((a, b) => a.data.order - b.data.order);
+---
+<section class="projects-section reveal">
+  <div class="projects-label">PROJECTS</div>
+  <div class="projects-grid">
+    {projects.map((p, i) => (
+      <a class="project-card" href={p.data.url ?? `#project-${i}`}>
+        <div class="project-icon">&lt;/&gt;</div>
+        <div class="project-title">{p.data.title}</div>
+        <div class="project-desc">{p.data.desc}</div>
+        <div class="project-more">MORE INFO</div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    padding: 100px 0 80px;
+  }
+  .projects-label { font-size: 32px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 36px; }
+  .projects-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .project-card {
+    background: var(--accent);
+    color: #06241a;
+    padding: 22px 22px 26px;
+    transition: translate .22s ease, box-shadow .22s ease;
+    cursor: pointer;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    animation: cardIn .55s cubic-bezier(.2,.7,.2,1) backwards;
+  }
+  .project-card:nth-child(1) { animation-delay: .05s; }
+  .project-card:nth-child(2) { animation-delay: .12s; }
+  .project-card:nth-child(3) { animation-delay: .19s; }
+  .project-card:nth-child(4) { animation-delay: .26s; }
+  .project-card:hover {
+    translate: 0 -6px;
+    box-shadow: 0 20px 48px rgba(0, 255, 163, 0.22);
+  }
+  .project-icon { font-weight: 700; font-size: 18px; margin-bottom: 48px; letter-spacing: -0.04em; }
+  .project-title { font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+  .project-desc { font-size: 12px; line-height: 1.55; margin-bottom: 22px; flex: 1; }
+  .project-more { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; }
+  .project-card:hover .project-more { text-decoration: underline; }
+  @keyframes cardIn {
+    from { opacity: 0; translate: 0 20px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+  @media (max-width: 768px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .project-card { min-height: 200px; }
+  }
+  @media (max-width: 480px) {
+    .projects-section { padding: 60px 0 48px; }
+    .projects-grid { grid-template-columns: 1fr; gap: 16px; }
+    .project-card { min-height: 160px; }
+  }
+</style>

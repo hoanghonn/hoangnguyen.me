@@ -1,0 +1,126 @@
+---
+---
+<section class="hero">
+  <div class="hero-photo">
+    <img src="/me.jpg" alt="Hoang Nguyen" class="hero-photo-img" />
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">HOANG NGUYEN</div>
+    <h1 class="hero-headline rotating" id="hero-headline">
+      <span class="swap" id="swap-text">SOFTWARE ENGINEER</span>
+    </h1>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#contact">GET IN TOUCH <span class="arr">↗</span></a>
+      <a class="btn btn-ghost" href="#resume">DOWNLOAD RESUME <span class="arr">↓</span></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const ROLES = ['SOFTWARE ENGINEER', 'FOUNDER', 'COMMUNITY BUILDER'];
+  let idx = 0;
+  const el = document.getElementById('swap-text');
+  if (el) {
+    setInterval(() => {
+      idx = (idx + 1) % ROLES.length;
+      el.style.animation = 'none';
+      el.offsetHeight; // reflow
+      el.style.animation = '';
+      el.textContent = ROLES[idx];
+    }, 2800);
+  }
+
+</script>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 56px;
+    padding: 100px 0 180px;
+  }
+  @media (max-width: 1024px) {
+    .hero-photo { width: 200px; height: 200px; }
+  }
+  @media (max-width: 640px) {
+    .hero { flex-direction: column; align-items: flex-start; gap: 28px; padding: 44px 0 80px; }
+    .hero-photo { width: 140px; height: 140px; }
+    .hero-eyebrow { font-size: 11px; margin: 6px 0 14px; }
+    .hero-cta { gap: 10px; }
+  }
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+  .hero-photo {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, #b9c8ff 0%, #6f7fc6 35%, #2b3a7a 70%, #0e1428 100%);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0 1px #1d1d1d;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    animation: heroIn .8s both;
+    transition: transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .6s ease;
+  }
+  .hero-photo:hover {
+    transform: scale(1.04) rotate(-2deg);
+    box-shadow: 0 0 0 1px var(--accent), 0 18px 50px rgba(28,241,150,0.18);
+  }
+  .hero-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--fg);
+    margin: 8px 0 18px;
+    animation: heroIn .6s .05s both;
+  }
+  .hero-headline {
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.96;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin: 0 0 38px;
+    color: var(--fg);
+    animation: heroIn .8s .15s both;
+  }
+  .hero-headline.rotating::after {
+    content: "";
+    display: inline-block;
+    width: 0.12em;
+    height: 0.85em;
+    background: var(--accent);
+    margin-left: 0.18ch;
+    vertical-align: -0.08em;
+    animation: blink 1s steps(2, start) infinite;
+  }
+  .swap { display: inline-block; animation: swapIn .55s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    animation: heroIn .6s .35s both;
+  }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes swapIn {
+    from { opacity: 0; transform: translateY(14px); filter: blur(4px); letter-spacing: 0.08em; }
+    to   { opacity: 1; transform: none; filter: none; letter-spacing: 0.04em; }
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>

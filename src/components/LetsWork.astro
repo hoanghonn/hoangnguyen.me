@@ -1,0 +1,28 @@
+---
+---
+<section class="lets reveal">
+  <div class="lets-row">
+    <h2 class="lets-h">LET'S WORK TOGETHER</h2>
+    <a href="#contact" class="lets-arrow" aria-label="Get in touch">↗</a>
+  </div>
+</section>
+
+<style>
+  .lets { padding: 120px 0 60px; }
+  .lets-row { display: flex; align-items: center; gap: 30px; }
+  .lets-h { font-size: 18px; font-weight: 700; letter-spacing: 0.12em; margin: 0; }
+  @media (max-width: 640px) {
+    .lets { padding: 64px 0 40px; }
+    .lets-h { font-size: 15px; letter-spacing: 0.08em; }
+  }
+  .lets-arrow {
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+    animation: float 3.2s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, -2px); }
+    50%       { transform: translate(4px, -8px); }
+  }
+</style>

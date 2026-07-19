@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
+import WorkExperience from '../components/WorkExperience.astro';
+import Education from '../components/Education.astro';
+import Projects from '../components/Projects.astro';
+import LetsWork from '../components/LetsWork.astro';
+import ContactStrip from '../components/ContactStrip.astro';
+import Wordmark from '../components/Wordmark.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Hoang Nguyen — Software Engineer">
+  <div class="page">
+    <Nav activePage="home" borderBottom />
+    <Hero />
+    <About />
+    <Skills />
+    <WorkExperience />
+    <Education />
+  </div>
+  <div class="page">
+    <Projects />
+    <LetsWork />
+    <ContactStrip />
+  </div>
+  <Wordmark />
+  <div class="page">
+    <Footer />
+  </div>
+</Base>

@@ -1,0 +1,32 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+
+media_folder: public/images/blog
+public_folder: /images/blog
+
+collections:
+  - name: blog
+    label: Blog Posts
+    folder: src/content/blog
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Category
+        name: category
+        widget: select
+        options: [Technology, Trail Running]
+      - { label: Date, name: date, widget: date, format: YYYY-MM-DD }
+      - { label: Read Time, name: readTime, widget: string, default: "5 min read" }
+      - label: Cover Style
+        name: cover
+        widget: select
+        options: [empty, illustration, gradient, photo]
+        default: empty
+      - { label: Cover Gradient (optional), name: coverGradient, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
